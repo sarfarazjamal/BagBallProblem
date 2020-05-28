@@ -1,0 +1,76 @@
+package com;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+/**
+ * 
+ * @author Sarfaraz Jamal
+ *
+ */
+public class ChooseBall {
+
+	public static void main(String[] args) {
+		try {
+			System.out.println("Input Number of Balls in a Bag: ");
+			Scanner sc = new Scanner(System.in);
+			int balls = sc.nextInt();
+			System.out.println("n = " + balls + ", result = " + calculate(balls));
+			int size = 100;
+			int[] arr = new int[size];
+			printCombination(arr, balls, 0);
+		} catch (InputMismatchException e) {
+			throw new InputMismatchException("Only Numbers are accepted for Input of Balls in a Bag");
+		}
+
+	}
+
+	/*This method is used for different ways to remove the balls from the bag
+	 * 
+	 * @param balls
+	 * @return
+	 */
+	private static int calculate(int balls) {
+		switch (balls) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		default:
+			int val = calculate(balls - 1) + calculate(balls - 2);
+			return val;
+		}
+	}
+
+	/*
+	 * This is used combination of ball removal
+	 * @param arr
+	 * @param n
+	 * @param i
+	 */
+	private static void printCombination(int arr[], int n, int i) {
+		int MAX_POINT = 2;
+		if (n == 0) {
+			displayCombination(arr, i);
+		} else if (n > 0) {
+			for (int k = 1; k <= MAX_POINT; k++) {
+				arr[i] = k;
+				printCombination(arr, n - k, i + 1);
+			}
+		}
+	}
+
+	/*
+	 * This is used to display combination of balls
+	 * @param arr
+	 * @param m
+	 */
+	private static void displayCombination(int arr[], int m) {
+		for (int i = 0; i < m; i++)
+			System.out.print(arr[i] + " ");
+		System.out.println();
+	}
+
+}
